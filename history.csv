@@ -1,0 +1,5 @@
+Operation,Operands,Result
+add,"[100.0, 3.0]",103.0
+subtract,"[6.0, 3.0]",3.0
+multiply,"[6.0, 3.0]",18.0
+divide,"[6.0, 2.0]",3.0
