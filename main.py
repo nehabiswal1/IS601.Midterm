@@ -1,3 +1,16 @@
+import logging
+import  os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+log_level = os.getenv('LOG_LEVEL', 'INFO').upper()
+logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
+
+logging.info("Calculator Started")
+logging.error("An Error Occurred")
+
+
 import pandas as pd
 from commands.add_command import AddCommand
 from commands.subtract_command import SubtractCommand
@@ -70,3 +83,10 @@ def repl():
 
 if __name__ == "__main__":
     repl()
+
+try:
+    result = command.execute(*args)
+    logging.info(f"Executed {command_name} with args {args}: {result}")
+except Exception as e:
+    logging.error(f"Error during {command_name}: {str(e)}")
+    print(f"Error: {e}")
