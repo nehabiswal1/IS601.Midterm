@@ -1,22 +1,26 @@
 import logging
-import  os
-from dotenv import load_dotenv
+import os
 import pandas as pd
+from dotenv import load_dotenv
 from Midterm.commands.add_command import AddCommand
 from Midterm.commands.subtract_command import SubtractCommand
 from Midterm.commands.multiply_command import MultiplyCommand
 from Midterm.commands.divide_command import DivideCommand
+
+# Load environment variables
 load_dotenv()
 
+# Set up logging
 log_level = os.getenv('LOG_LEVEL', 'INFO').upper()
 logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
 
 logging.info("Calculator Started")
 logging.error("An Error Occurred")
 
-
+# Initialize an empty DataFrame to store calculation history
 history = pd.DataFrame(columns=["Operation", "Operands", "Result"])
 
+# Dictionary of available calculator commands
 calculator_commands = {
     'add': AddCommand(),
     'subtract': SubtractCommand(),
@@ -24,6 +28,7 @@ calculator_commands = {
     'divide': DivideCommand(),
 }
 
+# Function to display menu
 def menu():
     print("Available commands: add, subtract, multiply, divide")
     print("Type 'history' to view history")
@@ -32,36 +37,39 @@ def menu():
     print("Type 'clear_history' to clear history")
     print("Type 'exit' to quit")
 
+# Function to add a calculation to history
+def add_to_history(operation, operands, result, history):
+    new_entry = {"Operation": operation, "Operands": operands, "Result": result}
+    return history.append(new_entry, ignore_index=True)
+
 # Function to save history to CSV
-def save_history():
+def save_history(history, filename='history.csv'):
     try:
-        history.to_csv('history.csv', index=False)
-        logging.info("History saved to history.csv")
-        print("History saved to history.csv")
+        history.to_csv(filename, index=False)
+        logging.info(f"History saved to {filename}")
+        print(f"History saved to {filename}")
     except Exception as e:
         logging.error(f"Failed to save history: {str(e)}")
         print(f"Error saving history: {e}")
 
 # Function to load history from CSV
-def load_history():
-    global history
+def load_history(filename='history.csv'):
     try:
-        history = pd.read_csv('history.csv')
-        logging.info("History loaded from history.csv")
-        print("History loaded from history.csv")
+        return pd.read_csv(filename)
     except FileNotFoundError:
         logging.warning("No previous history found. Starting with an empty history.")
         print("No previous history found. Starting with an empty history.")
+        return pd.DataFrame(columns=["Operation", "Operands", "Result"])
     except Exception as e:
         logging.error(f"Failed to load history: {str(e)}")
         print(f"Error loading history: {e}")
+        return pd.DataFrame(columns=["Operation", "Operands", "Result"])
 
 # Function to clear history
 def clear_history():
-    global history
-    history = pd.DataFrame(columns=["Operation", "Operands", "Result"])
     logging.info("History cleared")
     print("History cleared")
+    return pd.DataFrame(columns=["Operation", "Operands", "Result"])
 
 # Main REPL function
 def repl():
@@ -78,11 +86,11 @@ def repl():
         elif user_input == "history":
             print(history)
         elif user_input == "save_history":
-            save_history()
+            save_history(history)
         elif user_input == "load_history":
-            load_history()
+            history = load_history()
         elif user_input == "clear_history":
-            clear_history()
+            history = clear_history()
         else:
             try:
                 # Split user input into command and arguments
@@ -94,14 +102,11 @@ def repl():
                 result = command.execute(*args)
                 print(f"Result: {result}")
                 
-                # Append the result to history
-                history = history.append(
-                    {"Operation": command_name, "Operands": args, "Result": result}, 
-                    ignore_index=True
-                )
+                # Append the result to history using the add_to_history function
+                history = add_to_history(command_name, args, result, history)
                 
                 # Automatically save history after each operation
-                save_history()
+                save_history(history)
 
                 # Log the successful execution
                 logging.info(f"Executed {command_name} with args {args}: {result}")
@@ -115,3 +120,4 @@ def repl():
 
 if __name__ == "__main__":
     repl()
+
