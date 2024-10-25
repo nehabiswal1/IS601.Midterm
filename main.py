@@ -1,11 +1,19 @@
-import logging
+import sys
 import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
+import logging
 import pandas as pd
 from dotenv import load_dotenv
+
 from Midterm.commands.add_command import AddCommand
 from Midterm.commands.subtract_command import SubtractCommand
 from Midterm.commands.multiply_command import MultiplyCommand
 from Midterm.commands.divide_command import DivideCommand
+
+
 
 # Load environment variables
 load_dotenv()
