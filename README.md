@@ -19,12 +19,17 @@
 - Similar to Plugin System, we are utilizing Pandas to manage history
 
 #5. Setting Up Logging 
-- Imported logging as well as dotenv
+- Creating environement variables for Log Level
+- Logging Configuration
+- Confirming Initial Log Messages
+- For more information on logging and environment variables, please refer to #7
 
 #6. Testing and Ensuring Code Quality
-- hello testing
+- Ran functions like Pytest -v
+- Pytest Results: 100% 
 
 #7. Documentation and Video Presentation
-- Implementation of the Design Patterns
-- Environment Variables Used
+- Implementation of the Design Patterns: 
+
+- Environment Variables Used: Logging is a way to better understand what is going on in the code. To successfully work with logging we also need to implement environment variables.  The load_dotenv() loads environment variables from the .env file. In this .env file I only had one variable which is LOG_LEVEL=INFO.This variable is set to say that the "Calculator Started". There is also another variable which is for if an error occurred. In this case the variable would show "An Error Occured" 
  
