@@ -47,8 +47,8 @@ def menu():
 
 # Function to add a calculation to history
 def add_to_history(operation, operands, result, history):
-    new_entry = {"Operation": operation, "Operands": operands, "Result": result}
-    return pd.concat(history,new_entry, ignore_index=True)
+    new_entry =pd.DataFrame({"Operation": operation, "Operands": operands, "Result": result})
+    return pd.concat([history,new_entry], ignore_index=True)
 
 # Function to save history to CSV
 def save_history(history, filename='history.csv'):
