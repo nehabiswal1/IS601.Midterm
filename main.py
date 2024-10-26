@@ -8,10 +8,10 @@ import logging
 import pandas as pd
 from dotenv import load_dotenv
 
-from Midterm.commands.add_command import AddCommand
-from Midterm.commands.subtract_command import SubtractCommand
-from Midterm.commands.multiply_command import MultiplyCommand
-from Midterm.commands.divide_command import DivideCommand
+from commands.add_command import AddCommand
+from commands.subtract_command import SubtractCommand
+from commands.multiply_command import MultiplyCommand
+from commands.divide_command import DivideCommand
 
 
 
