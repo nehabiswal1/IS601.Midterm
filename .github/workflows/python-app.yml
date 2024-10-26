@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PYTHONPATH: ${{ github.workspace }}  # Set PYTHONPATH to include the root directory
+      PYTHONPATH: ${{ github.workspace }}  # Set PYTHONPATH to the root directory
 
     steps:
-      # Check out the code
+      # Check out repository code
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      # Set up Python
+      # Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
