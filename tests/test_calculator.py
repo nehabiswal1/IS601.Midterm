@@ -2,8 +2,7 @@ import sys
 import os
 import pandas as pd
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from Midterm.main import add_to_history, load_history, save_history, clear_history
-
+from main import add_to_history, load_history, save_history, clear_history
 
 # Test add_to_history function
 def test_add_to_history():
